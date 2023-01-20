@@ -50,13 +50,17 @@ export default class Board extends React.Component {
             })
         };
 
-       
-
         fetch("//localhost:8080/square/create" , requestOptions)
-            .then(res => res.json())
-            .then(
-                (data) => {
+            .then((data) => {
+                    return data.text();
+                }).then((data) => {
                     console.log(data);
+                   if(data.includes('winner')){
+                    this.setState({
+                        squares: Array(9).fill(null),
+                        xIsNext: !this.state.xIsNext,
+                      });
+                   }
                 },
                 (error) => {
                     console.log(error);

@@ -21,7 +21,7 @@ export default class Board extends React.Component {
         squares: squares,
         xIsNext: !this.state.xIsNext,
       });
-     // this.createSquare(i);
+      this.createSquare(i);
     }
     }
   
@@ -36,19 +36,23 @@ export default class Board extends React.Component {
     }
 
     createSquare(i){
+
+        let header = new Headers();
+            header.append('Content-Type', 'application/json');
+            header.append('Accept', 'application/json');
+        
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-            "Access-Control-Allow-Headers" : "Content-Type",
-            'Access-Control-Allow-Origin':'*',
-            'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' },
-            mode: 'cors', 
+            headers: header,
             body: JSON.stringify({
                 xoValue: this.state.xIsNext ? 'X' : 'O',
-                index: this.state.squares[i]
+                index: i
             })
         };
-        fetch("http://localhost:8080/square/create" + requestOptions)
+
+       
+
+        fetch("//localhost:8080/square/create" , requestOptions)
             .then(res => res.json())
             .then(
                 (data) => {
